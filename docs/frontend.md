@@ -3,7 +3,7 @@
 Add the plugin to your frontend app:
 
 ```bash
-cd packages/app && yarn add @anakz/backstage-plugin-dependency-check
+cd packages/app && yarn add @anakz/backstage-plugin-library-check
 ```
 
 Expose the main plugin page:
@@ -11,14 +11,14 @@ Expose the main plugin page:
 ```ts
 // packages/app/src/App.tsx
 
-import { DependencyCheckIndexPage } from '@anakz/backstage-plugin-dependency-check';
+import { LibraryCheckIndexPage } from '@anakz/backstage-plugin-library-check';
 
 // ...
 
 const AppRoutes = () => (
   <FlatRoutes>
     // ...
-    <Route path="/dependency-check" element={<DependencyCheckIndexPage />} />
+    <Route path="/library-check" element={<LibraryCheckIndexPage />} />
     // ...
   </FlatRoutes>
 );
@@ -34,7 +34,7 @@ Add it to sidebar:
  
  <SidebarItem
    icon={ExtensionIcon}
-   to="dependency-check"
+   to="library-check"
    text="Libraries"
  />
 
@@ -47,9 +47,9 @@ Expose the entity plugin tab:
 // packages/app/src/components/catalog/EntityPage.tsx
 
 import {
-  DependencyCheckPage,
-  useIsProjectDependenciesAvailable,
-} from '@anakz/backstage-plugin-dependency-check';
+  LibraryCheckPage,
+  useIsProjectLibrariesAvailable,
+} from '@anakz/backstage-plugin-library-check';
 
 // ...
 
@@ -57,11 +57,11 @@ const serviceEntityPage = (
 // ...
 
     <EntityLayout.Route
-      path="/dependency-check"
+      path="/library-check"
       title="Libraries"
-      if={useIsProjectDependenciesAvailable}
+      if={useIsProjectLibrariesAvailable}
     >
-      <DependencyCheckPage />
+      <LibraryCheckPage />
     </EntityLayout.Route>
 
 // ...    

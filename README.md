@@ -1,6 +1,6 @@
-# Backstage.io Dependency Checker Plugin
+# Backstage.io Library Check Plugin
 
-This plugin helps you explore project dependencies by offering insights and visualizing current, latest, and upcoming versions for your entire organization.
+This plugin helps you explore project dependency libraries by offering insights and visualizing current, latest, and upcoming versions for your entire organization.
 
 ### Initial support:
 
@@ -42,7 +42,7 @@ If you have any suggestions for files/languages, please feel welcome to file an 
    - Integrates seamlessly with the Backstage.io platform, enhancing overall project management and development environment.
 
 5. **Code Occurrences:**
-   - Search for occurrences of the dependency in project files **(initial support only for GitHub Code Search)** ⚠️
+   - Search for occurrences of the library in project files **(initial support only for GitHub Code Search)** ⚠️
 
 ## Setup
 
@@ -50,17 +50,17 @@ Find [installation instructions](./docs/setup.md) in our documentation.
 
 ## Examples
 
-Entity dependencies list:
+Entity libraries list:
 
-![Dependencies list](./docs/images/plugin_entity_tab-dependencies.png)
+![Libraries list](./docs/images/plugin_entity_tab-libraries.png)
 
-![Dependencies list](./docs/images/plugin_entity_tab-choose-descriptor.png)
+![Libraries list](./docs/images/plugin_entity_tab-choose-descriptor.png)
 
-![Dependencies list](./docs/images/plugin_entity_tab-occurrances.png)
+![Libraries list](./docs/images/plugin_entity_tab-occurrances.png)
 
-![Dependencies list](./docs/images/plugin_entity_tab-code-search.png)
+![Libraries list](./docs/images/plugin_entity_tab-code-search.png)
 
-![Dependencies overview](./docs/images/plugin_page-overview.png)
+![Libraries overview](./docs/images/plugin_page-overview.png)
 
 
 ## License

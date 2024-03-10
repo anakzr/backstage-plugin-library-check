@@ -4,28 +4,28 @@
 Add the plugin to your backend app:
 
 ```bash
-cd packages/backend && yarn add @anakz/backstage-plugin-dependency-check-backend
+cd packages/backend && yarn add @anakz/backstage-plugin-library-check-backend
 ```
 
-Create new file at packages/backend/src/plugins/dependencyCheck.ts:
+Create new file at packages/backend/src/plugins/libraryCheck.ts:
 
 ```ts
 
-// packages/backend/src/plugins/dependencyCheck.ts
+// packages/backend/src/plugins/libraryCheck.ts
 
 import { PluginEnvironment } from '../types';
 import { Router } from 'express';
 import {
-  DatabaseDependencyCheckStore,
+  DatabaseLibraryCheckStore,
   createRouter,
-} from '@anakz/backstage-plugin-dependency-check-backend';
+} from '@anakz/backstage-plugin-library-check-backend';
 
 export default async function createPlugin({
   logger,
   database,
   config,
 }: PluginEnvironment): Promise<Router> {
-  const db = await DatabaseDependencyCheckStore.create({
+  const db = await DatabaseLibraryCheckStore.create({
     database: database,
   });
   return await createRouter({
@@ -48,7 +48,7 @@ builder.addEntityProvider(
     // add a new provider entry, configure the schedule frequency as you wish
     // initialDelay must be up to 15s to avoid conflicts
 
-    DependencyCheckProvider.fromConfig({
+    LibraryCheckProvider.fromConfig({
       config: env.config,
       envId: 'production',
       logger: env.logger,
@@ -74,11 +74,11 @@ builder.addEntityProvider(
   builder.addProcessor(
     // ...
 
-    DependencyCheckProcessor.fromConfig(env.config, {
+    LibraryCheckProcessor.fromConfig(env.config, {
       reader: env.reader,
       logger: env.logger,
     }),
-    DependencyCheckGlobalUpdateProcessor.fromConfig(env.config, {
+    LibraryCheckUpdaterProcessor.fromConfig(env.config, {
       reader: env.reader,
       logger: env.logger,
     }),
@@ -92,11 +92,11 @@ builder.addEntityProvider(
 Now add the plugin to your packages/backend/src/index.ts:
 
 ```ts
-import dependencyCheck from './plugins/dependencyCheck';
+import libraryCheck from './plugins/libraryCheck';
 
 // ...
-const dependencyCheckEnv = useHotMemoize(module, () => createEnv('dependencyCheck'));
+const libraryCheckEnv = useHotMemoize(module, () => createEnv('libraryCheck'));
 
 // ...
-  apiRouter.use('/dependency-check', await dependencyCheck(dependencyCheckEnv));
+  apiRouter.use('/library-check', await libraryCheck(libraryCheckEnv));
 ```
