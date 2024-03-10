@@ -1,8 +1,8 @@
-# Backstage.io Dependency Checker Plugin
+# New features requested or problems related so far
 
-This plugin helps you explore project dependencies by offering insights and visualizing current, latest, and upcoming versions for your entire organization.
 
-### Initial support:
+## Languages and descriptor files:
+
 
 | Descriptor Files              | Language       | Package Registry                                      | Status |
 | ----------------------------- | -------------- | ----------------------------------------------------- | ------ |
@@ -22,55 +22,9 @@ This plugin helps you explore project dependencies by offering insights and visu
 | Gemfile                       | Ruby           | [RubyGems](https://rubygems.org/)                     | ❌     |
 
 
-If you have any suggestions for files/languages, please feel welcome to file an issue. 🙂  
+## Code Search
 
-## Key Features
-
-1. **List of Entity Libraries:**
-
-   - Interface to easily list the entity libraries in use.
-
-2. **Summary Overview:**
-
-   - Presents a summary of library usage, emphasizing the expected next version (when provided by registry)
-
-3. **Automated Registry Verification:**
-
-   - Streamlines the verification process against relevant registries.
-
-4. **Smooth Integration:**
-   - Integrates seamlessly with the Backstage.io platform, enhancing overall project management and development environment.
-
-5. **Code Occurrences:**
-   - Search for occurrences of the dependency in project files **(initial support only for GitHub Code Search)** ⚠️
-
-## Setup
-
-Find [installation instructions](./docs/setup.md) in our documentation.
-
-## Examples
-
-Entity dependencies list:
-
-![Dependencies list](./docs/images/plugin_entity_tab-dependencies.png)
-
-![Dependencies list](./docs/images/plugin_entity_tab-choose-descriptor.png)
-
-![Dependencies list](./docs/images/plugin_entity_tab-occurrances.png)
-
-![Dependencies list](./docs/images/plugin_entity_tab-code-search.png)
-
-![Dependencies overview](./docs/images/plugin_page-overview.png)
-
-
-## License
-
-This library is under the [MIT](LICENSE) license.
-
-## Issues
-
-Please feel free to report any issues via github issues page.
-
-## Future work
-
-Please see the next features planned [here](./docs/new-features.md).
+- ✅ Github
+- 👩🏻‍💻 Azure
+- ❌ Gitlab
+- ❌ Bitbucket
