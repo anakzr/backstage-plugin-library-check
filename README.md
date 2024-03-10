@@ -52,7 +52,7 @@ Find [installation instructions](./docs/setup.md) in our documentation.
 
 Entity libraries list:
 
-![Libraries list](./docs/images/plugin_entity_tab-libraries.png)
+![Libraries list](./docs/images/plugin_entity_tab-dependencies.png)
 
 ![Libraries list](./docs/images/plugin_entity_tab-choose-descriptor.png)
 
