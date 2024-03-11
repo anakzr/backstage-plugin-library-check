@@ -11,7 +11,6 @@ This plugin helps you explore project dependency libraries by offering insights 
 | *.csproj                      | C#             | [Nuget](https://nuget.org/)                           | ✅     |
 | composer.json                 | PHP            | [Packagist](https://packagist.org/)                   | ✅     |            
 | pom.xml, build.gradle         | Java           | [Maven](https://maven.apache.org/)                    | 👩🏻‍💻     |
-| pyproject.toml                | Kotlin         | [Maven](https://maven.apache.org/)                    | 👩🏻‍💻     |
 | go.mod                        | Go             | [pkg.go.dev](https://pkg.go.dev/)                     | ❌     |
 | CMakeLists.txt, conanfile.txt | C++            | [Conan](https://conan.io/)                            | ❌     |
 | pubspec.yaml                  | Dart           | [pub.dev](https://pub.dev/)                           | ❌     |
