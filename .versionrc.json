@@ -1,0 +1,16 @@
+{
+  "packageFiles": [
+    "plugins/library-check/package.json",
+    "plugins/library-check-backend/package.json"
+  ],
+  "bumpFiles": [
+    {
+      "filename": "plugins/library-check/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "plugins/library-check-backend/package.json",
+      "type": "json"
+    }
+  ]
+}

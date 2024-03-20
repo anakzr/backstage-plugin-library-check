@@ -1,0 +1,26 @@
+#Para Desenvolvimento LOCAL
+version: '3.7'
+
+services:
+  techdocs:
+    build:
+      context: ./docker/python
+      dockerfile: Dockerfile
+  database_basebackstage:
+    image: postgres
+    container_name: db_basebackstage
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=basebackstage
+      - POSTGRES_DB=db_basebackstage
+      - POSTGRES_HOST=localhost
+      - POSTGRES_PORT=5432
+    volumes:
+      - pgdata:/data/postgres
+
+volumes:
+  pgdata:
+    driver: local
