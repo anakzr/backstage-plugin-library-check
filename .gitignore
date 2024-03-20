@@ -107,7 +107,6 @@ dist
 .vscode
 dist-types/
 
-*app-config.yaml
 app-config.production.yaml
 *-credentials.yaml
 
