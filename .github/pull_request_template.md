@@ -2,7 +2,7 @@
 Thanks for creating an Pull Request 💖!
 
 Please read the following before submitting:
-- PRs that adds new external dependencies might take a while to review.
+- PRs that adds new external libraries might take a while to review.
 - Keep your PR as small as possible.
 - Limit your PR to one type (docs, feat, refact, ci, or bugfix)
 - Remove this comment

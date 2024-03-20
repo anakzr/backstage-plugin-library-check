@@ -1,0 +1,84 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "16 || 18"
+  },
+  "scripts": {
+    "start:production": "yarn dev",
+    "start:staging": "yarn dev",
+    "dev": "concurrently \"yarn start\" \"yarn start-backend\"",
+    "start": "yarn workspace app start",
+    "start-backend": "yarn workspace backend start",
+    "start-backend:dev": "yarn workspace backend start:dev",
+    "checkall": "yarn tsc && yarn lint:all",
+    "build": "backstage-cli repo build --all",
+    "build-image": "yarn workspace backend build-image",
+    "tsc": "tsc",
+    "tsc:full": "tsc --skipLibCheck false --incremental false",
+    "clean": "backstage-cli clean && lerna run clean",
+    "clean:hard": "yarn clean && lerna run clean:hard && rm -rf node_modules && rm yarn.lock",
+    "clean:config": "rm gh-dev-credentials.yaml && rm app-config.yaml",
+    "diff": "lerna run diff --",
+    "test": "backstage-cli test",
+    "test:all": "lerna run test -- --coverage",
+    "lint": "backstage-cli repo lint --since origin/master",
+    "lint:all": "backstage-cli repo lint",
+    "prettier:check": "prettier --check .",
+    "create-plugin": "backstage-cli new --scope internal --select plugin",
+    "remove-plugin": "backstage-cli remove-plugin",
+    "log": "console.log('test')",
+    "docker:up": "docker-compose up --build -d",
+    "docker:reset": "docker rm -f $(docker ps -a -q) && yarn docker:up",
+    "dx:start": "yarn install && yarn tsc && yarn build && yarn docker:up && yarn dev",
+    "dx:reset-start": "yarn docker:reset && yarn dx:start",
+    "new": "backstage-cli new --scope internal",
+    "release": "changeset publish",
+    "build:frontend-package": "cd plugins/library-check && yarn build",
+    "build:backend-package": "cd plugins/library-check-backend && yarn build"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "plugins/*"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.25.2",
+    "@backstage/e2e-test-utils": "^0.1.1",
+    "@commitlint/cli": "^13.2.0",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@spotify/prettier-config": "^12.0.0",
+    "@types/git-url-parse": "^9.0.2",
+    "commitizen": "^4.2.4",
+    "concurrently": "^6.0.0",
+    "cz-conventional-changelog": "3.3.0",
+    "lerna": "^4.0.0",
+    "node-gyp": "^9.0.0",
+    "prettier": "^2.3.2",
+    "typescript": "~5.3.0"
+  },
+  "resolutions": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
+  },
+  "prettier": "@spotify/prettier-config",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.27.1"
+  }
+}
