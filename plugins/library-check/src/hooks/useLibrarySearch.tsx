@@ -109,8 +109,8 @@ export const useLibrarySearch = (): {
       }
     } catch (error) {
       setSearchError(true);
-      return null;
     }
+    return null;
   };
 
   const openDialog = (libraryName: string, repoName: string) => {
