@@ -1,5 +1,13 @@
 # @anakz/backstage-plugin-library-check
 
+## 0.0.3
+
+### Patch Changes
+
+- 159d695: Fixed spelling on package.json url and some persistence improvements with knex
+- Updated dependencies [159d695]
+  - @anakz/backstage-plugin-library-check-backend@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes

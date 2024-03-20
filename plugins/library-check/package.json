@@ -1,7 +1,7 @@
 {
   "name": "@anakz/backstage-plugin-library-check",
   "description": "Backstage.io Library Check plugin frontend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "license": "MIT",
@@ -41,7 +41,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@anakz/backstage-plugin-library-check-backend": "0.0.2",
+    "@anakz/backstage-plugin-library-check-backend": "0.0.3",
     "@backstage/core-components": "^0.14.0",
     "@backstage/core-plugin-api": "^1.9.0",
     "@backstage/errors": "^1.2.3",
