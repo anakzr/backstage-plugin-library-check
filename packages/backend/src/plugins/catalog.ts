@@ -55,7 +55,6 @@ export default async function createPlugin(
     }),
 
     LibraryCheckProvider.fromConfig({
-      config: env.config,
       envId: 'production',
       logger: env.logger,
       discovery: env.discovery,
@@ -75,11 +74,13 @@ export default async function createPlugin(
 
   builder.addProcessor(
     LibraryCheckProcessor.fromConfig(env.config, {
+      discoveryService: env.discovery,
       reader: env.reader,
       logger: env.logger,
     }),
 
     LibraryCheckUpdaterProcessor.fromConfig(env.config, {
+      discoveryService: env.discovery,
       reader: env.reader,
       logger: env.logger,
     }),

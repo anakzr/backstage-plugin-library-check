@@ -131,5 +131,4 @@ docker/
 
 dist-types/
 .DS_Store
-
 app-config.yaml

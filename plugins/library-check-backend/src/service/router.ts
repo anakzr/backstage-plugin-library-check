@@ -5,6 +5,7 @@ import express, { RequestHandler } from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
 import { LibraryUpdateRecord, Library } from '../types';
+import { InputError } from '@backstage/errors';
 
 export interface RouterOptions {
   logger: Logger;
@@ -54,11 +55,10 @@ export async function createRouter(
     const data = await database.listLibraries();
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`There was an error trying to get libraries data`);
     }
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -68,7 +68,7 @@ export async function createRouter(
     const data = await database.readLibrary(request.params.name);
 
     response.status(200);
-    response.send(data ?? []);
+    response.json(data ?? []);
   }) as RequestHandler);
 
   /**
@@ -79,12 +79,13 @@ export async function createRouter(
     const data = await database.createLibraries(payload);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(
+        `There was an error trying persist libraries on database`,
+      );
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -96,12 +97,11 @@ export async function createRouter(
     const data = await database.updateLibrary(payload);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`There was an error trying to update the libraries`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -111,12 +111,11 @@ export async function createRouter(
     const data = await database.deleteLibrary(request.params.name);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`There was an error trying to delete the library`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -128,12 +127,11 @@ export async function createRouter(
     const data = await database.searchLibraries(query);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`Libraries searched does not exist on database`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -145,12 +143,11 @@ export async function createRouter(
     const data = await database.readLibrariesByName(payload);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`Libraries searched does not exist on database`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -165,12 +162,11 @@ export async function createRouter(
     const data = await database.createLibraryUpdateRecord(payload);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`There was an error trying to create a new record`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -181,12 +177,11 @@ export async function createRouter(
     const data = await database.readRecordsByNames(payload);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`Records searched does not exist on database`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -198,12 +193,11 @@ export async function createRouter(
     const data = await database.searchRecordsByQuery(query);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`Records searched does not exist on database`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -215,12 +209,11 @@ export async function createRouter(
     const data = await database.getImpactDistributionByQuery(query);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`Distribution records does not exist on database`);
     }
 
     response.status(200);
-    response.send(data);
+    response.json(data);
   }) as RequestHandler);
 
   /**
@@ -233,44 +226,40 @@ export async function createRouter(
     const data = await database.countTotalsByQuery(query);
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`No records were found on database`);
     }
 
-    response.status(200).send({ total: data });
+    response.status(200).json({ total: data });
   }) as RequestHandler);
 
   router.get(`/libraries-updates/languages/totals`, (async (_, response) => {
     const data = await database.getDistinctLibrariesPerLanguage();
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`No languages were found on database`);
     }
 
-    response.status(200).send(data);
+    response.status(200).json(data);
   }) as RequestHandler);
 
   router.get(`/libraries/languages`, (async (_, response) => {
     const data = await database.getLanguages();
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`No languages were found on database`);
     }
 
-    response.status(200).send(data);
+    response.status(200).json(data);
   }) as RequestHandler);
 
   router.get(`/libraries-updates/updates/entities`, (async (_, response) => {
     const data = await database.getDistinctImpactByEntity();
 
     if (!data) {
-      response.sendStatus(401);
-      return;
+      throw new InputError(`No entities were found on database`);
     }
 
-    response.status(200).send(data);
+    response.status(200).json(data);
   }) as RequestHandler);
 
   router.use(errorHandler());

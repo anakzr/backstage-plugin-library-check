@@ -7,7 +7,6 @@ import { DiscoveryService } from '@backstage/backend-plugin-api';
 import { PluginTaskScheduler, TaskRunner } from '@backstage/backend-tasks';
 import { Logger } from 'winston';
 import { LibraryCheckService } from '../service/LibraryCheckService';
-import { Config } from '@backstage/config';
 
 // This should get the libraries saved on libraries table
 // And fetch on the official registries for new data
@@ -17,23 +16,22 @@ export class LibraryCheckProvider implements EntityProvider {
   private connection?: EntityProviderConnection;
   private readonly libraryCheckService: LibraryCheckService;
   private readonly envId: string;
-  private readonly config: Config;
+  private readonly discovery: DiscoveryService;
 
   constructor(
-    config: Config,
     logger: Logger,
     envId: string,
+    discovery: DiscoveryService,
     taskRunner: TaskRunner,
   ) {
     this.scheduleFn = this.createScheduleFn(taskRunner);
     this.logger = logger;
     this.envId = envId;
-    this.config = config;
+    this.discovery = discovery;
     this.libraryCheckService = new LibraryCheckService();
   }
 
   static fromConfig(options: {
-    config: Config;
     envId: string;
     discovery: DiscoveryService;
     logger: Logger;
@@ -56,9 +54,9 @@ export class LibraryCheckProvider implements EntityProvider {
       });
 
     return new LibraryCheckProvider(
-      options.config,
       options.logger,
       options.envId,
+      options.discovery,
       taskRunner,
     );
   }
@@ -102,7 +100,7 @@ export class LibraryCheckProvider implements EntityProvider {
       return;
     }
 
-    const baseUrl = `${this.config.get('backend.baseUrl')}`;
+    const baseUrl = await this.discovery.getBaseUrl('library-check');
     const currentTime = new Date();
     const updateTimeT60 = new Date(currentTime.getTime() - 60 * 60 * 1000);
 

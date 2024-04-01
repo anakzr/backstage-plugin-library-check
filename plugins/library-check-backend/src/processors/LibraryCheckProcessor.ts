@@ -14,39 +14,39 @@ import { Library, TLanguages } from '../types';
 import * as T from '../types';
 import { LibraryCheckService } from '../service/LibraryCheckService';
 import { FileToLanguageMap, RegistryConfig } from '../mappers/RegistryMapper';
+import { DiscoveryService } from '@backstage/backend-plugin-api';
 
 export class LibraryCheckProcessor implements CatalogProcessor {
   private readonly integrations: ScmIntegrationRegistry;
   private readonly logger: Logger;
-  private readonly config: Config;
   private readonly reader: UrlReader;
   private readonly descriptorHandler: DescriptorFileHandler;
   private readonly libraryCheckService: LibraryCheckService;
+  private readonly discoveryService: DiscoveryService;
 
   static fromConfig(
     config: Config,
     options: {
       logger: Logger;
+      discoveryService: DiscoveryService;
       reader: UrlReader;
     },
   ) {
     const integrations = ScmIntegrations.fromConfig(config);
 
-    return new LibraryCheckProcessor(config, {
+    return new LibraryCheckProcessor({
       ...options,
       integrations,
     });
   }
 
-  constructor(
-    config: Config,
-    options: {
-      integrations: ScmIntegrationRegistry;
-      logger: Logger;
-      reader: UrlReader;
-    },
-  ) {
-    this.config = config;
+  constructor(options: {
+    integrations: ScmIntegrationRegistry;
+    logger: Logger;
+    reader: UrlReader;
+    discoveryService: DiscoveryService;
+  }) {
+    this.discoveryService = options.discoveryService;
     this.integrations = options.integrations;
     this.logger = options.logger;
     this.reader = options.reader;
@@ -103,14 +103,15 @@ export class LibraryCheckProcessor implements CatalogProcessor {
   async postProcessEntity(entity: Entity): Promise<Entity> {
     if (this.shouldProcessEntity(entity)) {
       const librariesMap = this.extractLibrariesMap(entity);
-      const endpoint = `${this.config.get(
-        'backend.baseUrl',
-      )}/api/library-check/libraries`;
+      const endpoint = await this.discoveryService.getBaseUrl('library-check');
 
       const libraries = Object.values(librariesMap);
 
       try {
-        this.libraryCheckService.saveLibraries(libraries, endpoint);
+        this.libraryCheckService.saveLibraries(
+          libraries,
+          `${endpoint}/libraries`,
+        );
 
         this.logger.info(
           'LibraryCheckProcessor: Saved entity metadata libraries on database',
