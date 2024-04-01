@@ -9,38 +9,38 @@ import { CatalogProcessor } from '@backstage/plugin-catalog-node';
 import { Logger } from 'winston';
 import * as T from '../types';
 import { LibraryCheckService } from '../service/LibraryCheckService';
+import { DiscoveryService } from '@backstage/backend-plugin-api';
 import { semverImpact, versionToObj } from '../utils/semver';
 import { LibraryUpdateRecord } from '../types';
 
 export class LibraryCheckUpdaterProcessor implements CatalogProcessor {
   private readonly logger: Logger;
-  private readonly config: Config;
   private readonly libraryCheckService: LibraryCheckService;
+  private readonly discoveryService: DiscoveryService;
 
   static fromConfig(
     config: Config,
     options: {
       logger: Logger;
       reader: UrlReader;
+      discoveryService: DiscoveryService;
     },
   ) {
     const integrations = ScmIntegrations.fromConfig(config);
 
-    return new LibraryCheckUpdaterProcessor(config, {
+    return new LibraryCheckUpdaterProcessor({
       ...options,
       integrations,
     });
   }
 
-  constructor(
-    config: Config,
-    options: {
-      integrations: ScmIntegrationRegistry;
-      logger: Logger;
-      reader: UrlReader;
-    },
-  ) {
-    this.config = config;
+  constructor(options: {
+    integrations: ScmIntegrationRegistry;
+    logger: Logger;
+    reader: UrlReader;
+    discoveryService: DiscoveryService;
+  }) {
+    this.discoveryService = options.discoveryService;
     this.logger = options.logger;
     this.libraryCheckService = new LibraryCheckService();
   }
@@ -52,7 +52,7 @@ export class LibraryCheckUpdaterProcessor implements CatalogProcessor {
   async postProcessEntity(entity: Entity): Promise<Entity> {
     if (this.shouldProcessEntity(entity)) {
       const { libraries } = entity.metadata;
-      const baseUrl = `${this.config.get('backend.baseUrl')}`;
+      const baseUrl = await this.discoveryService.getBaseUrl('library-check');
 
       await this.processLibraries(baseUrl, entity, libraries as T.Descriptors);
 
