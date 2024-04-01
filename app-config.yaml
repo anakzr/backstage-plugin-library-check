@@ -50,7 +50,7 @@ integrations:
   github:
     - host: github.com
       apps:
-    #    - $include: github-app-backstage-plugin-app-test-credentials.yaml  # reference your integration here
+        - $include: github-app-backstage-plugin-app-test-credentials.yaml
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
@@ -80,9 +80,9 @@ auth:
   providers:
     github:
       development:
-        # ## GitHubApp Local Development (oauth app on github) ADD your token here
-        # clientId: 
-        # clientSecret: 
+        # ## GitHubApp Local Development (oauth app on github)
+        clientId: Iv1.1720f39289cdbd05
+        clientSecret: c81cb7138fa6cf8639ea3f810b25ab70efbbf847
 
 
 scaffolder:

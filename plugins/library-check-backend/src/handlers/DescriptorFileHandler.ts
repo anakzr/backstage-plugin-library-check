@@ -3,6 +3,8 @@ import { RequirementsTxtHandler } from './RequirementsTxtHandler';
 import { ComposerJsonHandler } from './ComposerJsonHandler';
 import { CsProjHandler } from './CsProjHandler';
 import { FileType, FileHandler, Libraries } from '../types';
+import { BuildGradleHandler } from './BuildGradleHandler';
+import { PomXmlHandler } from './PomXmlHandler';
 
 export class DescriptorFileHandler {
   private handlers: Record<FileType, FileHandler>;
@@ -13,6 +15,8 @@ export class DescriptorFileHandler {
       [FileType.RequirementsTxt]: new RequirementsTxtHandler(),
       [FileType.ComposerJson]: new ComposerJsonHandler(),
       [FileType.CsProj]: new CsProjHandler(),
+      [FileType.BuildGradle]: new BuildGradleHandler(),
+      [FileType.PomXml]: new PomXmlHandler(),
     };
   }
 

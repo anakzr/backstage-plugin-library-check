@@ -49,7 +49,7 @@ export type SearchDescriptorFilesResult = {
   };
 };
 
-export type TLanguages = 'javascript' | 'python' | 'php' | 'csharp';
+export type TLanguages = 'javascript' | 'python' | 'php' | 'csharp' | 'java';
 
 export interface LibraryUpdateRecord {
   id?: string;
@@ -72,6 +72,8 @@ export enum FileType {
   RequirementsTxt = 'requirementstxt',
   ComposerJson = 'composerjson',
   CsProj = 'csproj',
+  PomXml = 'pomxml',
+  BuildGradle = 'buildgradle',
 }
 
 export type Registry = {
