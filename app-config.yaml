@@ -81,8 +81,8 @@ auth:
     github:
       development:
         # ## GitHubApp Local Development (oauth app on github)
-        clientId: Iv1.1720f39289cdbd05
-        clientSecret: c81cb7138fa6cf8639ea3f810b25ab70efbbf847
+        clientId: 
+        clientSecret: 
 
 
 scaffolder:
