@@ -1,5 +1,11 @@
 # @anakz/backstage-plugin-library-check-backend
 
+## 0.1.0
+
+### Minor Changes
+
+- 7fd99de: Using discovery service to get plugin api urls
+
 ## 0.0.3
 
 ### Patch Changes
