@@ -1,6 +1,6 @@
 # Adding new handlers
 
-### 1. Create a type for the descriptor file you want at `handlers/index.ts` - use lowercase and omit the (.)
+### 1. Create a type for the descriptor file you want at `types/index.ts` - use lowercase and omit the (.)
 
 ```typescript
 // handlers/index.ts
@@ -37,7 +37,7 @@ export class YourFileTypeHandler implements FileHandler {
 
 ```
 
-### 3. Inject the handler on `DescriptiorFileHandler` class
+### 3. Inject the handler on `handlers/DescriptiorFileHandler` class
 
 Connect the handler into the reader management logic;
 
@@ -73,16 +73,16 @@ export class DescriptorFileHandler {
 [Optional]: create a new language representing the descriptor file - if the language doesn't exist yet;
 
 ```typescript
-// database/LibraryCheckStore.ts
+// types/index.ts
 export type TLanguages = 'javascript' | 'python' | 'php' | 'csharp' | 'yournewlanguage';
 
 ```
 
-At the processor file `processors/DependencScannerProcessor.ts`, connect the handler:
+At the processor file `processors/LibraryCheckProcessor.ts`, connect the handler:
 
 
 ```typescript
-// processors/DependencScannerProcessor.ts
+// processors/LibraryCheckProcessor.ts
 
  private async updateLibraryCheck(libraries: any, endpoint: string) {
     const librariesMap: T.LibraryMap = {};
@@ -103,7 +103,7 @@ At the processor file `processors/DependencScannerProcessor.ts`, connect the han
 Register the glob pattern so the scanner can use the file handler to search for files
 
 ```typescript
-// processors/DependencScannerProcessor.ts
+// processors/LibraryCheckProcessor.ts
     const descriptorsGlobPatterns = [
       '**/package.json',
       '**/composer.json',
