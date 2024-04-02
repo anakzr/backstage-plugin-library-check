@@ -1,5 +1,12 @@
 # @anakz/backstage-plugin-library-check
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [7fd99de]
+  - @anakz/backstage-plugin-library-check-backend@0.1.0
+
 ## 0.0.3
 
 ### Patch Changes
