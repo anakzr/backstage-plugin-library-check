@@ -75,16 +75,21 @@ builder.addEntityProvider(
     // ...
 )
 
-// add the new processors entries
+// Add the new processor entries, and try to declare the LibraryCheckUpdater as the last in order.
 
   builder.addProcessor(
     // ...
 
     LibraryCheckProcessor.fromConfig(env.config, {
+      discoveryService: env.discovery,
       reader: env.reader,
       logger: env.logger,
     }),
+
+    // Other processors...
+    
     LibraryCheckUpdaterProcessor.fromConfig(env.config, {
+      discoveryService: env.discovery,
       reader: env.reader,
       logger: env.logger,
     }),

@@ -19,7 +19,7 @@ export class LibraryCheckService {
     try {
       // TODO: Check by date of last change on entity
       const response = await axios.get(
-        `${url}/api/library-check/libraries/search?registry_last_check=${timeString}`,
+        `${url}/libraries/search?registry_last_check=${timeString}`,
       );
       libraries = response.data;
     } catch (error) {
@@ -49,7 +49,7 @@ export class LibraryCheckService {
         // Fetch data on the official registries
         const data = await this.registryService.fetchRegistryData(dep);
 
-        await axios.put(`${baseUrl}/api/library-check/libraries/update`, data);
+        await axios.put(`${baseUrl}/libraries/update`, data);
       } catch (error) {
         console.log(
           `LibraryCheckService: Error trying to update ${dep.name} on database`,
@@ -65,10 +65,7 @@ export class LibraryCheckService {
     let libraries: Library[] = [];
 
     try {
-      const res = await axios.post(
-        `${baseUrl}/api/library-check/libraries/search`,
-        payload,
-      );
+      const res = await axios.post(`${baseUrl}/libraries/search`, payload);
 
       libraries = res.data;
     } catch (error) {
@@ -85,11 +82,7 @@ export class LibraryCheckService {
     let response: string = '';
 
     try {
-      const res = await axios.post(
-        `${baseUrl}/api/library-check/libraries-updates`,
-        payload,
-      );
-
+      const res = await axios.post(`${baseUrl}/libraries-updates`, payload);
       response = res.statusText;
     } catch (error) {
       console.log(
