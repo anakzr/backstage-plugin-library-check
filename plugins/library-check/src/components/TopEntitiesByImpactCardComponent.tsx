@@ -28,6 +28,10 @@ const selectItems = [
     label: 'Unknown',
     value: 'unknown',
   },
+  {
+    label: 'Up To Date',
+    value: 'up-to-date',
+  },
 ];
 
 const filterTableData = (data: any[] | undefined, filterValue: string) => {

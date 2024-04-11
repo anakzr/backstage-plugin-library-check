@@ -1,37 +1,45 @@
+import * as g2js from 'gradle-to-js';
 import { Libraries, FileHandler } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 
 export class BuildGradleHandler implements FileHandler {
   read(fileContent: string): Libraries {
     const libraries: Libraries = {};
+    let result: any;
 
-    // Regex pattern to match dependency declarations
-    const dependencyPattern =
-      /(?:implementation|compile|api|compileOnly|runtimeOnly|testImplementation|integrationTestImplementation)\s+(?:group:\s+)?['"]?([^:'"]+)['"]?,\s+(?:name:\s+)?['"]?([^:'"]+)['"]?,\s+(?:version:\s+)?['"]?([^:'"]+)['"]?/g;
+    const readAsyncResult = this.readAsync(fileContent);
+    readAsyncResult
+      .then(parsed => {
+        result = JSON.parse(parsed);
+        const dependencies = result.dependencies;
 
-    fileContent.split('\n').forEach(line => {
-      // Remover espaços em branco e comentários
-      const trimmedLine = line.trim();
-      if (
-        !trimmedLine ||
-        trimmedLine.startsWith('//') ||
-        trimmedLine.startsWith('/*')
-      ) {
-        return; // Ignorar linhas em branco e comentários
-      }
+        if (dependencies) {
+          dependencies.forEach((dep: any) => {
+            const name = dep.name;
+            const version = validateSemverNotation(dep.version);
+            // const type = dep.type;
+            const group = dep.group;
+            const key = `core:${name.replace(/["':]/g, '')}${
+              group !== '' ? `:${group}` : ''
+            }`;
 
-      // Executar a expressão regular na linha
-      const match = dependencyPattern.exec(trimmedLine);
-
-      if (match) {
-        const dependencyType = match[1] ? match[1].trim() : 'implementation';
-        const groupId = match[2];
-        const artifactId = match[3];
-        const version = match[4];
-        const key = `${dependencyType}:${groupId}:${artifactId}`;
-        libraries[key] = version;
-      }
-    });
+            libraries[key] = version;
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     return libraries;
+  }
+
+  async readAsync(fileContent: string): Promise<string> {
+    try {
+      const result = await g2js.parseText(fileContent);
+      return JSON.stringify(result);
+    } catch (error) {
+      throw error;
+    }
   }
 }

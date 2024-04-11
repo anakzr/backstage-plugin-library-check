@@ -390,7 +390,8 @@ export class DatabaseLibraryCheckStore implements LibraryCheckStore {
           COALESCE(SUM(CASE WHEN type_of_update = 'breaking' THEN 1 ELSE 0 END), 0) AS breaking,
           COALESCE(SUM(CASE WHEN type_of_update = 'minor' THEN 1 ELSE 0 END), 0) AS minor,
           COALESCE(SUM(CASE WHEN type_of_update = 'patch' THEN 1 ELSE 0 END), 0) AS patch,
-          COALESCE(SUM(CASE WHEN type_of_update = 'unknown' THEN 1 ELSE 0 END), 0) AS unknown
+          COALESCE(SUM(CASE WHEN type_of_update = 'unknown' THEN 1 ELSE 0 END), 0) AS unknown,
+          COALESCE(SUM(CASE WHEN type_of_update = 'up-to-date' THEN 1 ELSE 0 END), 0) AS up_to_date
         FROM
           entity_libraries_updates
         GROUP BY
@@ -413,7 +414,8 @@ export class DatabaseLibraryCheckStore implements LibraryCheckStore {
           COALESCE(SUM(CASE WHEN type_of_update = 'breaking' THEN 1 ELSE 0 END), 0) AS breaking,
           COALESCE(SUM(CASE WHEN type_of_update = 'minor' THEN 1 ELSE 0 END), 0) AS minor,
           COALESCE(SUM(CASE WHEN type_of_update = 'patch' THEN 1 ELSE 0 END), 0) AS patch,
-          COALESCE(SUM(CASE WHEN type_of_update = 'unknown' THEN 1 ELSE 0 END), 0) AS unknown
+          COALESCE(SUM(CASE WHEN type_of_update = 'unknown' THEN 1 ELSE 0 END), 0) AS unknown,
+          COALESCE(SUM(CASE WHEN type_of_update = 'up-to-date' THEN 1 ELSE 0 END), 0) AS up_to_date
         FROM
           entity_libraries_updates
         GROUP BY
@@ -435,7 +437,8 @@ export class DatabaseLibraryCheckStore implements LibraryCheckStore {
           COALESCE(SUM(CASE WHEN type_of_update = 'breaking' THEN 1 ELSE 0 END), 0) AS breaking,
           COALESCE(SUM(CASE WHEN type_of_update = 'minor' THEN 1 ELSE 0 END), 0) AS minor,
           COALESCE(SUM(CASE WHEN type_of_update = 'patch' THEN 1 ELSE 0 END), 0) AS patch,
-          COALESCE(SUM(CASE WHEN type_of_update = 'unknown' THEN 1 ELSE 0 END), 0) AS unknown
+          COALESCE(SUM(CASE WHEN type_of_update = 'unknown' THEN 1 ELSE 0 END), 0) AS unknown,
+          COALESCE(SUM(CASE WHEN type_of_update = 'up-to-date' THEN 1 ELSE 0 END), 0) AS up_to_date
         FROM
           entity_libraries_updates
         GROUP BY

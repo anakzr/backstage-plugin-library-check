@@ -1,9 +1,9 @@
 import { Library } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 import { RegistryConfig, RegistryMapper } from './RegistryMapper';
-// import { truncate } from '../utils/strings';
 import axios from 'axios';
 
-export class MavenMapper implements RegistryMapper {
+export class MavenResponseMapper implements RegistryMapper {
   map(response: any): Library {
     if (response.code === 'ERR_BAD_REQUEST') {
       const library: Library = {
@@ -15,17 +15,18 @@ export class MavenMapper implements RegistryMapper {
       return library;
     }
 
-    console.log('response from MAVEN:', response);
+    const docs = response.response.docs[0];
 
     const library: Library = {
-      name: '',
-      description: '',
-      latest_version: undefined,
-      homepage_url: undefined,
+      name: `${docs.a}:${docs.g}`,
+      description: undefined,
+      latest_version: validateSemverNotation(docs.latestVersion),
+      latest_version_date: new Date(docs.timestamp).toISOString(),
+      homepage_url: docs.g,
       next_version: undefined,
-      repository: undefined,
+      repository: docs.repositoryId,
       bugs_url: undefined,
-      engines: undefined,
+      engines: docs.p,
       registry_last_check: new Date().toISOString(),
       language: 'java',
     };
@@ -34,9 +35,15 @@ export class MavenMapper implements RegistryMapper {
   }
 
   async fetch(_library: string, _registry: string): Promise<any> {
+    const [artifactId, groupId] = _library.split(':');
     const url = RegistryConfig[_registry].url;
+
     try {
-      const response = await axios.get(`${url}?q=${_library}&wt=json`);
+      // https://search.maven.org/solrsearch/select?q=g:${groupId}+AND+a:${artifactId}&rows=20&wt=json
+
+      const response = await axios.get(
+        `${url}?q=g:${groupId}+AND+a:${artifactId}&rows=20&wt=json`,
+      );
       return response.data;
     } catch (error) {
       return { error, dep: { name: _library } };

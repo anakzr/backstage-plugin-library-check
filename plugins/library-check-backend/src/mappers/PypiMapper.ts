@@ -2,6 +2,7 @@ import { Library } from '../types';
 import { RegistryConfig, RegistryMapper } from './RegistryMapper';
 import { truncate } from '../utils/strings';
 import axios from 'axios';
+import { validateSemverNotation } from '../utils/semver';
 
 export class PypiResponseMapper implements RegistryMapper {
   map(response: any): Library {
@@ -18,7 +19,7 @@ export class PypiResponseMapper implements RegistryMapper {
     const library: Library = {
       name: response.info?.name.toLowerCase(),
       description: truncate(response?.info?.description, 500) || undefined,
-      latest_version: response?.info?.version || undefined,
+      latest_version: validateSemverNotation(response?.info?.version),
       homepage_url: response?.info.home_page || undefined,
       next_version: undefined,
       repository: response?.info?.project_urls?.Homepage || undefined,

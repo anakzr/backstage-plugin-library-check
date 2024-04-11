@@ -1,5 +1,6 @@
 import * as xml2js from 'xml2js';
 import { Libraries, FileHandler } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 
 export class PomXmlHandler implements FileHandler {
   read(fileContent: string): Libraries {
@@ -19,14 +20,14 @@ export class PomXmlHandler implements FileHandler {
         dependencies.forEach((dep: any) => {
           const groupId = dep.groupId;
           const artifactId = dep.artifactId;
-          const version = dep.version;
+          const version = validateSemverNotation(dep.version);
           let config = 'core'; // Default configuration
           if (dep.scope === 'test') {
             config = 'test';
           } else if (dep.scope === 'provided') {
             config = 'provided';
-          } // Add more conditions for other scopes as needed
-          const key = `${config}:${groupId}:${artifactId}`;
+          }
+          const key = `${config}:${artifactId}:${groupId}`;
           libraries[key] = version;
         });
       }

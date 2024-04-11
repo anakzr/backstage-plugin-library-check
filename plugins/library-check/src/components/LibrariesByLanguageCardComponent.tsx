@@ -43,6 +43,10 @@ const selectItems = [
     label: 'C#',
     value: 'csharp',
   },
+  {
+    label: 'Java',
+    value: 'java',
+  },
 ];
 
 export const LibrariesByLanguageCardComponent = () => {
@@ -118,7 +122,7 @@ export const LibrariesByLanguageCardComponent = () => {
               tickMargin={5}
               height={75}
               label={{
-                value: 'Number of occurrences',
+                value: 'Number of entities',
                 position: 'insideBottomCenter',
               }}
             />
@@ -150,9 +154,16 @@ export const LibrariesByLanguageCardComponent = () => {
                 content={renderCustomizedLabel}
               />
             </Bar>
-            <Bar dataKey="patch" fill="#1DB954" stackId="a">
+            <Bar dataKey="patch" fill="#82b6ef" stackId="a">
               <LabelList
                 dataKey="patch"
+                position="center"
+                content={renderCustomizedLabel}
+              />
+            </Bar>
+            <Bar dataKey="up_to_date" fill="#1DB954" stackId="a">
+              <LabelList
+                dataKey="up_to_date"
                 position="center"
                 content={renderCustomizedLabel}
               />

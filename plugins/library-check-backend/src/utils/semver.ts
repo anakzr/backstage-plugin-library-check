@@ -1,3 +1,5 @@
+import * as semver from 'semver';
+
 export const versionToObj = (version?: string) => {
   if (!version) return {};
 
@@ -11,9 +13,13 @@ export const versionToObj = (version?: string) => {
 export const semverImpact = (
   next: any,
   current: any,
-): 'breaking' | 'minor' | 'patch' | 'unknown' => {
+): 'breaking' | 'minor' | 'patch' | 'unknown' | 'up-to-date' => {
   const isBreaking = next.major > current.major;
   const isMinor = next.minor > current.minor;
+  const isOnTrack =
+    next.minor === current.minor &&
+    next.major === current.major &&
+    next.patch === current.patch;
   const isEmpty = (obj: any) => Object.keys(obj).length === 0;
 
   if (isEmpty(next) || isEmpty(current)) {
@@ -24,6 +30,23 @@ export const semverImpact = (
     return 'breaking';
   } else if (isMinor) {
     return 'minor';
+  } else if (isOnTrack) {
+    return 'up-to-date';
   }
+
   return 'patch';
 };
+
+export function validateSemverNotation(str: string): string {
+  if (!str) {
+    return '';
+  }
+
+  const testVersion = semver.valid(semver.coerce(str));
+
+  if (testVersion !== null) {
+    return testVersion;
+  }
+
+  return '';
+}

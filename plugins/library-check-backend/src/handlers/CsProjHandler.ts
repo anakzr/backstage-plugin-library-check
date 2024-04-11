@@ -1,5 +1,6 @@
 import * as xml2js from 'xml2js';
 import { FileHandler, Libraries } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 
 export class CsProjHandler implements FileHandler {
   read(fileContent: string): Libraries {
@@ -28,7 +29,7 @@ export class CsProjHandler implements FileHandler {
                 : 'core';
 
               const key = `${usage}:${name}`;
-              const value = version;
+              const value = validateSemverNotation(version);
 
               libraries[key] = value;
             });

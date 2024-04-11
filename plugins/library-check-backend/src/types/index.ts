@@ -53,7 +53,7 @@ export type TLanguages = 'javascript' | 'python' | 'php' | 'csharp' | 'java';
 
 export interface LibraryUpdateRecord {
   id?: string;
-  type_of_update?: 'breaking' | 'minor' | 'patch' | 'unknown';
+  type_of_update?: 'breaking' | 'minor' | 'patch' | 'unknown' | 'up-to-date';
   library_name: string;
   update_date?: string;
   current_entity_version: string;
@@ -65,6 +65,7 @@ export interface LibraryUpdateRecord {
 
 export type FileHandler = {
   read(fileContent: string): Libraries;
+  readAsync?(fileContent: string): Promise<string>;
 };
 
 export enum FileType {

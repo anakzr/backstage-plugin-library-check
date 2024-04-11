@@ -1,7 +1,12 @@
 import { FileHandler, Libraries } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 
 export class ComposerJsonHandler implements FileHandler {
   read(fileContent: string): Libraries {
+    if (fileContent.trim() === '') {
+      return {};
+    }
+
     const composerJson = JSON.parse(fileContent);
     const libraries: Libraries = composerJson.require;
     const devLibraries: Libraries = composerJson['require-dev'];
@@ -22,7 +27,7 @@ export class ComposerJsonHandler implements FileHandler {
         prefix = 'dev:';
       }
 
-      resultLibraries[`${prefix}${key}`] = value;
+      resultLibraries[`${prefix}${key}`] = validateSemverNotation(value);
     }
 
     return resultLibraries;

@@ -2,6 +2,7 @@ import { truncate } from '../utils/strings';
 import { Library } from '../types';
 import { RegistryMapper, RegistryConfig } from './RegistryMapper';
 import axios from 'axios';
+import { validateSemverNotation } from '../utils/semver';
 
 export class NpmResponseMapper implements RegistryMapper {
   map(response: any): Library {
@@ -18,7 +19,7 @@ export class NpmResponseMapper implements RegistryMapper {
     const library: Library = {
       name: response.name,
       description: truncate(response?.description, 255) || undefined,
-      latest_version: response['dist-tags']?.latest || undefined,
+      latest_version: validateSemverNotation(response['dist-tags']?.latest),
       latest_version_date:
         response?.time[response['dist-tags']?.latest] || undefined,
       created_at: response?.time?.created || undefined,

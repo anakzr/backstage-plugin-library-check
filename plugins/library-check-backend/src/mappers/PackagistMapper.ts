@@ -2,6 +2,7 @@ import { Library } from '../types';
 import { RegistryConfig, RegistryMapper } from './RegistryMapper';
 import { truncate } from '../utils/strings';
 import axios from 'axios';
+import { validateSemverNotation } from '../utils/semver';
 
 export class PackagistResponseMapper implements RegistryMapper {
   map(response: any): Library {
@@ -29,7 +30,7 @@ export class PackagistResponseMapper implements RegistryMapper {
     const library: Library = {
       name: depName,
       description: truncate(latestVersion?.description, 255) || undefined,
-      latest_version: latestVersion?.version || undefined,
+      latest_version: validateSemverNotation(latestVersion?.version),
       latest_version_date: latestVersion?.time || undefined,
       created_at: firstVersion?.time || undefined,
       modified_at: latestVersion?.time || undefined,
@@ -40,7 +41,7 @@ export class PackagistResponseMapper implements RegistryMapper {
       repository: latestVersion?.source
         ? `+git:${latestVersion?.source?.url}`
         : undefined,
-      bugs_url: latestVersion?.suport
+      bugs_url: latestVersion?.support
         ? latestVersion?.support?.issues
         : `${
             latestVersion?.source?.url?.replace('.git', '/issues') || undefined

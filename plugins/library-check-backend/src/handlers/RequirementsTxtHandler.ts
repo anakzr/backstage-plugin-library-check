@@ -1,18 +1,32 @@
 import { FileHandler, Libraries } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 
 export class RequirementsTxtHandler implements FileHandler {
   read(fileContent: string): Libraries {
-    const libraries: Libraries = {};
-    const lines = fileContent.split('\n');
+    if (!fileContent.trim()) {
+      return {};
+    }
 
-    lines.forEach((line: string) => {
-      const match = RegExp(/^([^\s=]+)==(.+)$/).exec(line);
-      if (match) {
-        const packageName = match[1];
-        const packageVersion = match[2];
-        libraries[`core:${packageName}`] = packageVersion;
+    const lines = fileContent.split('\n');
+    const libraries: Libraries = {};
+
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      const operatorIndex = trimmedLine.search(/[<>=]=?/); // Encontra o primeiro operador
+      if (operatorIndex === -1) {
+        continue;
       }
-    });
+
+      const packageName = trimmedLine.slice(0, operatorIndex).trim();
+      const packageVersion = trimmedLine
+        .slice(operatorIndex)
+        .trim()
+        .replace(/\s/g, '');
+
+      const formattedPackageName = `core:${packageName.replace(/\s/g, '')}`;
+
+      libraries[formattedPackageName] = validateSemverNotation(packageVersion);
+    }
 
     return libraries;
   }
