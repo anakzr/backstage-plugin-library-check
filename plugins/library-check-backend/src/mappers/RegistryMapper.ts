@@ -25,6 +25,12 @@ export const RegistryConfig: Registry = {
     language: 'csharp',
     url: 'https://api.nuget.org/v3/registration3',
   },
+
+  maven: {
+    name: 'maven',
+    language: 'java',
+    url: 'https://search.maven.org/solrsearch/select',
+  },
 };
 
 export const LanguageToRegistryMap: RegistryLanguageMap = {
@@ -32,6 +38,7 @@ export const LanguageToRegistryMap: RegistryLanguageMap = {
   php: 'packagist',
   python: 'pypi',
   csharp: 'nuget',
+  java: 'maven',
 };
 
 export const FileToLanguageMap: RegistryLanguageMap = {
@@ -39,4 +46,6 @@ export const FileToLanguageMap: RegistryLanguageMap = {
   packagejson: 'javascript',
   csproj: 'csharp',
   requirementstxt: 'python',
+  pomxml: 'java',
+  buildgradle: 'java',
 };

@@ -4,6 +4,7 @@ import {
   PypiResponseMapper,
   PackagistResponseMapper,
   NugetResponseMapper,
+  MavenResponseMapper,
 } from '../mappers/index';
 
 import {
@@ -20,6 +21,7 @@ export class RegistryService {
       packagist: new PackagistResponseMapper(),
       pypi: new PypiResponseMapper(),
       nuget: new NugetResponseMapper(),
+      maven: new MavenResponseMapper(),
     };
   }
 

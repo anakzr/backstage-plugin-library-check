@@ -1,10 +1,15 @@
 import { FileHandler, Libraries } from '../types';
+import { validateSemverNotation } from '../utils/semver';
 
 export class PackageJsonHandler implements FileHandler {
   read(fileContent: string): Libraries {
+    if (fileContent.trim() === '') {
+      return {};
+    }
+
     const packageJson = JSON.parse(fileContent);
-    const libraries: Libraries = packageJson.dependencies;
-    const devLibraries: Libraries = packageJson.devDependencies;
+    const libraries: Libraries = packageJson.dependencies || {};
+    const devLibraries: Libraries = packageJson.devDependencies || {};
 
     const resultLibraries: Libraries = {};
 
@@ -22,7 +27,7 @@ export class PackageJsonHandler implements FileHandler {
         prefix = 'dev:';
       }
 
-      resultLibraries[`${prefix}${key}`] = value;
+      resultLibraries[`${prefix}${key}`] = validateSemverNotation(value);
     }
 
     return resultLibraries;

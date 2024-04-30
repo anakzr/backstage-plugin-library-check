@@ -63,7 +63,7 @@ export default async function createPlugin(
           seconds: 190,
         },
         frequency: {
-          minutes: 60,
+          minutes: 15,
         },
         timeout: {
           minutes: 3,

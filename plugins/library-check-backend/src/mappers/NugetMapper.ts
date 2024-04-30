@@ -2,13 +2,14 @@ import axios from 'axios';
 import { Library } from '../types';
 import { RegistryConfig, RegistryMapper } from './RegistryMapper';
 import { truncate } from '../utils/strings';
+import { validateSemverNotation } from '../utils/semver';
 
 export class NugetResponseMapper implements RegistryMapper {
   map(_response: any): Library {
     const library: Library = {
       name: _response.id,
       description: truncate(_response.description, 255) || undefined,
-      latest_version: _response.version,
+      latest_version: validateSemverNotation(_response.version),
       latest_version_date: _response.lastEdited,
       created_at: _response.created,
       modified_at: _response.lastEdited,

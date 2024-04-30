@@ -24,7 +24,7 @@ export class LibraryCheckService {
       libraries = response.data;
     } catch (error) {
       console.log(
-        'LibraryCheckService: Error trying to get libraries to check on registry',
+        'LibraryCheckService: Error trying to search for pending libraries to check on registry',
       );
     }
 
@@ -48,7 +48,7 @@ export class LibraryCheckService {
       try {
         // Fetch data on the official registries
         const data = await this.registryService.fetchRegistryData(dep);
-
+        // Update libraries table with latest_version from oficial registry
         await axios.put(`${baseUrl}/libraries/update`, data);
       } catch (error) {
         console.log(
@@ -69,7 +69,9 @@ export class LibraryCheckService {
 
       libraries = res.data;
     } catch (error) {
-      console.log('LibraryCheckService: Error trying to get libraries data');
+      console.log(
+        'LibraryCheckService: Error trying to search for libraries on database',
+      );
     }
 
     return libraries;
@@ -83,10 +85,12 @@ export class LibraryCheckService {
 
     try {
       const res = await axios.post(`${baseUrl}/libraries-updates`, payload);
+
       response = res.statusText;
     } catch (error) {
       console.log(
-        'LibraryCheckService: Error trying to get libraries to check on registry',
+        'LibraryCheckService: Error trying to update libraries occurrences records on entities_libraries table',
+        error,
       );
     }
 

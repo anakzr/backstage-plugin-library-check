@@ -18,8 +18,12 @@ export const SemverBadge = ({ status }: { status: string }) => {
     color = '#FE5C51';
   } else if (status === 'minor') {
     color = '#FF9800';
-  } else {
+  } else if (status === 'up-to-date') {
     color = '#1DB954';
+  } else if (status === 'patch') {
+    color = '#82b6ef';
+  } else {
+    color = '#9E9E9E';
   }
 
   const style = {

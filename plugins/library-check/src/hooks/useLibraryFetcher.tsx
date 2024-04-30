@@ -10,7 +10,8 @@ const formatLibraries = (depsPrefixed: {}) => {
   const core: any = {};
 
   Object.entries(depsPrefixed).forEach((library: any) => {
-    const [type, name] = library[0].split(':');
+    const [type, ...nameParts] = library[0].split(':');
+    const name = nameParts.join(':');
 
     if (type === 'both') {
       dev[name] = `${name}+${library[1]}`;
@@ -47,10 +48,10 @@ const mapDepsToTable = (
     );
 
     return {
-      name: dep.name,
+      name: dep.name.split(':')[0],
       type: isDev ? 'dev' : 'core',
-      projectVersion: currentVersion,
-      semverProject: semverToObj(currentVersion),
+      projectVersion: currentVersion === '' ? 'unknown' : currentVersion,
+      semverProject: semverToObj(currentVersion) ?? 'unknown',
       latestVersion: dep.latest_version ?? 'unknown',
       semverLatest: semverToObj(dep.latest_version),
       nextVersion: dep.next_version ?? 'unknown',

@@ -86,6 +86,8 @@ export class LibraryCheckProcessor implements CatalogProcessor {
       '**/composer.json',
       '**/*.csproj',
       '**/requirements.txt',
+      '**/pom.xml',
+      '**/build.gradle',
     ];
 
     // Search for files and read them

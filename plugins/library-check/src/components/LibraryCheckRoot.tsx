@@ -26,10 +26,11 @@ export const LibraryCheckRoot = () => {
   }, [selectedValue, updateContextData]);
 
   const metadata = {
-    'Total Libraries': <StatusRunning>{countersData.totalDeps}</StatusRunning>,
+    'Total Libraries': <StatusAborted>{countersData.totalDeps}</StatusAborted>,
+    'Up-To-Date': <StatusOK>{countersData.upToDate}</StatusOK>,
     'Breaking (major)': <StatusError>{countersData.breaking}</StatusError>,
     minor: <StatusWarning>{countersData.minor}</StatusWarning>,
-    patch: <StatusOK>{countersData.patch}</StatusOK>,
+    patch: <StatusRunning>{countersData.patch}</StatusRunning>,
     unknown: <StatusAborted>{countersData.unknown}</StatusAborted>,
   };
 
