@@ -17,7 +17,7 @@
     "build-image": "docker build ../.. -f Dockerfile --tag backstage"
   },
   "dependencies": {
-    "@anakz/backstage-plugin-library-check-backend": "0.1.0",
+    "@anakz/backstage-plugin-library-check-backend": "0.2.0",
     "@backstage/backend-common": "^0.21.2",
     "@backstage/backend-tasks": "^0.5.17",
     "@backstage/catalog-client": "^1.6.0",
