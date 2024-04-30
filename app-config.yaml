@@ -50,7 +50,7 @@ integrations:
   github:
     - host: github.com
       apps:
-        - $include: github-app-backstage-plugin-app-test-credentials.yaml
+        - $include: 
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
     #   apiBaseUrl: https://ghe.example.net/api/v3
