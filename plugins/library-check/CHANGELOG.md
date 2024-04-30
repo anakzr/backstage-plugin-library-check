@@ -1,5 +1,16 @@
 # @anakz/backstage-plugin-library-check
 
+## 0.1.0
+
+### Minor Changes
+
+- e3a0ebc: Adding support for build.gradle and POM.xml files
+
+### Patch Changes
+
+- Updated dependencies [e3a0ebc]
+  - @anakz/backstage-plugin-library-check-backend@0.2.0
+
 ## 0.0.4
 
 ### Patch Changes
